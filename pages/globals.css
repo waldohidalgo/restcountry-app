@@ -1,0 +1,21 @@
+html,
+body {
+  padding: 0;
+  margin: 0;
+}
+* {
+  box-sizing: border-box;
+}
+nav,
+main {
+  padding-inline: 10px;
+  @media screen and (min-width: 550px) {
+    padding-inline: 33px;
+  }
+  @media screen and (min-width: 870px) {
+    padding-inline: 78px;
+  }
+}
+a {
+  text-decoration: none;
+}
