@@ -78,8 +78,10 @@ export default function Nav({ font }) {
           onClick={() => dispatch(changeTheme())}
           title="Click to change theme"
         >
-          {theme === "light" ? <IoMdMoon /> : <MdSunny />}
-          {theme === "light" ? "Dark Mode" : "Light Mode"}
+          <span style={{ display: "flex", alignItems: "center" }}>
+            {theme === "light" ? <IoMdMoon /> : <MdSunny />}
+          </span>
+          <span>{theme === "light" ? "Dark Mode" : "Light Mode"}</span>
         </Switch>
       </Navbar>
     </>
