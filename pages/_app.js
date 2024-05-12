@@ -2,7 +2,7 @@ import Layout from "../src/components/layout.js";
 import ThemeProviderWrapper from "@/components/features/theme/ThemeContext.js";
 import { Provider } from "react-redux";
 import store from "@/components/store.js";
-import globals from "./globals.css";
+import globals from "../src/globals.css";
 
 export default function App({ Component, pageProps }) {
   return (

@@ -203,6 +203,9 @@ const ContenedorPaisesBorder = styled.div`
 
 export default function Blog({ data }) {
   const router = useRouter();
+  if (router.isFallback) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <>
