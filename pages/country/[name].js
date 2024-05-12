@@ -214,7 +214,9 @@ const ContenedorPaisesBorder = styled.div`
 export default function Blog({ data, error }) {
   const router = useRouter();
   if (error) {
-    return <p>Error al cargar la publicación: {error}</p>;
+    return (
+      <p>Error al cargar la publicación. Reintenta otra vez en un momento</p>
+    );
   }
   if (router.isFallback) {
     return <div>Loading...</div>;
