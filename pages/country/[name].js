@@ -199,6 +199,10 @@ const ContenedorPaisesBorder = styled.div`
     padding: 5px 21px;
     display: flex;
     align-items: center;
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
   }
   .titulo {
     font-weight: 600;
@@ -291,7 +295,7 @@ export default function Blog({ data, error }) {
                 ? data.borderCountries.map((pais) => (
                     <span className="PaisBorder" key={pais}>
                       {" "}
-                      {pais}{" "}
+                      <Link href={`/country/${pais}`}>{pais}</Link>
                     </span>
                   ))
                 : "None"}
