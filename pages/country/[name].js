@@ -39,7 +39,7 @@ export async function getStaticProps(context) {
     nativeName: Object.values(objetoPais.name.nativeName).map(
       (item) => item.common
     ),
-    flags: objetoPais.flags.svg,
+    flags: objetoPais.flags ? objetoPais.flags.svg : "",
     region: objetoPais.region,
     subregion: objetoPais.subregion,
     capital: objetoPais.capital,
