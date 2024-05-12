@@ -20,43 +20,53 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps(context) {
-  const name = context.params.name;
-  const res = await fetch(
-    `https://restcountries.com/v3.1/name/${name}?fields=name,population,region,subregion,capital,tld,currencies,languages,borders,flags`
-  );
-  const data = await res.json();
+  try {
+    const name = context.params.name;
+    const res = await fetch(
+      `https://restcountries.com/v3.1/name/${name}?fields=name,population,region,subregion,capital,tld,currencies,languages,borders,flags`
+    );
+    const data = await res.json();
 
-  const cca3plusName = await fetch(
-    `https://restcountries.com/v3.1/all?fields=cca3,name`
-  );
-  const arrayCca3NamePreviuos = await cca3plusName.json();
-  const objetoNameCCA3 = {};
-  arrayCca3NamePreviuos.forEach((item) => {
-    objetoNameCCA3[item.cca3] = item.name.common;
-  });
-  const objetoPais = data[0];
-  const preparedData = {
-    nativeName: Object.values(objetoPais.name.nativeName).map(
-      (item) => item.common
-    ),
-    flags: objetoPais.flags ? objetoPais.flags.svg : "",
-    region: objetoPais.region,
-    subregion: objetoPais.subregion,
-    capital: objetoPais.capital,
-    population: objetoPais.population,
-    tld: objetoPais.tld,
-    languages: Object.values(objetoPais.languages),
-    currencies: Object.values(objetoPais.currencies).map(
-      (currency) => currency.name
-    ),
-    borderCountries: objetoPais.borders.map((pais) => objetoNameCCA3[pais]),
-  };
+    const cca3plusName = await fetch(
+      `https://restcountries.com/v3.1/all?fields=cca3,name`
+    );
+    const arrayCca3NamePreviuos = await cca3plusName.json();
+    const objetoNameCCA3 = {};
+    arrayCca3NamePreviuos.forEach((item) => {
+      objetoNameCCA3[item.cca3] = item.name.common;
+    });
+    const objetoPais = data[0];
+    const preparedData = {
+      nativeName: Object.values(objetoPais.name.nativeName).map(
+        (item) => item.common
+      ),
+      flags: objetoPais.flags ? objetoPais.flags.svg : "",
+      region: objetoPais.region,
+      subregion: objetoPais.subregion,
+      capital: objetoPais.capital,
+      population: objetoPais.population,
+      tld: objetoPais.tld,
+      languages: Object.values(objetoPais.languages),
+      currencies: Object.values(objetoPais.currencies).map(
+        (currency) => currency.name
+      ),
+      borderCountries: objetoPais.borders.map((pais) => objetoNameCCA3[pais]),
+    };
 
-  return {
-    props: {
-      data: preparedData,
-    },
-  };
+    return {
+      props: {
+        data: preparedData,
+      },
+    };
+  } catch (error) {
+    console.error(error);
+    // Mostrar mensaje de error al usuario o generar página de error
+    return {
+      props: {
+        error: "Error al cargar la publicación",
+      },
+    };
+  }
 }
 
 const Contenedor = styled.div`
@@ -201,8 +211,11 @@ const ContenedorPaisesBorder = styled.div`
   }
 `;
 
-export default function Blog({ data }) {
+export default function Blog({ data, error }) {
   const router = useRouter();
+  if (error) {
+    return <p>Error al cargar la publicación: {error}</p>;
+  }
   if (router.isFallback) {
     return <div>Loading...</div>;
   }
